@@ -3,7 +3,7 @@ name: dev-assistant
 description: "Development assistant with auto-documentation, context management and quality gates. In discovery mode, never edits without confirmation."
 metadata:
   author: Prismas33
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Dev Assistant
@@ -102,6 +102,7 @@ Se existirem, respeitar:
 ```
 doc/
 ├── MEMORIA.md              # Contexto principal do projeto
+├── CHANGELOG.md            # Histórico de versões (Keep a Changelog)
 ├── componentes/            # Documentação de componentes
 ├── desenvolvimento/
 │   ├── diario.md          # Histórico de desenvolvimento
@@ -160,7 +161,46 @@ Deteto automaticamente qual estrutura existe e adapto.
 ### Após Feature
 - [ ] MEMORIA.md precisa update?
 - [ ] Entrada no diário?
+- [ ] CHANGELOG.md atualizado?
 - [ ] Componentes documentados?
+
+---
+
+## 📋 Manutenção do CHANGELOG
+
+### Quando Propor Entrada
+- Após implementar **nova feature**
+- Após corrigir **bug**
+- Após fazer **breaking change**
+- Após corrigir **vulnerabilidade de segurança**
+
+### Formato (Keep a Changelog)
+```markdown
+## [Unreleased]
+
+### Added
+- Nova funcionalidade X para fazer Y (#issue)
+
+### Fixed
+- Corrigido bug onde Z acontecia em condição W
+```
+
+### Comportamento
+1. **Não adicionar automaticamente** - Propor a entrada
+2. Sugerir categoria apropriada (Added/Changed/Fixed/etc.)
+3. Sugerir bump de versão se aplicável:
+   - **PATCH** (0.0.X): Bug fixes
+   - **MINOR** (0.X.0): Novas features compatíveis
+   - **MAJOR** (X.0.0): Breaking changes
+4. Ao fazer release, lembrar de mover [Unreleased] para versão datada
+
+### Exemplo de Proposta
+> "Feature implementada. Proponho adicionar ao CHANGELOG:
+> ```
+> ### Added
+> - Sistema de notificações por email (#42)
+> ```
+> Sugestão de versão: 1.3.0 → 1.4.0 (nova feature)"
 
 ---
 
