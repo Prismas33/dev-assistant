@@ -1,15 +1,15 @@
 # Dev Assistant
 
-Agent skill for development assistance with auto-documentation, context management and quality gates.
+Codex skill for repository discovery, project continuity, safe documentation setup, modular architecture, and proportional quality gates.
 
-## Features
+## Highlights
 
-- 🆕 **Project Setup** - Guided questions + doc structure creation
-- 🔄 **Auto-Context** - Reads MEMORIA.md automatically without asking
-- 🔍 **Discovery Mode** - Never edits code during investigation without confirmation
-- ✅ **Quality Gates** - Checklists for commits, bugs, deploys
-- 📝 **Auto Documentation** - Proposes diary and docs updates
-- 📁 **Embedded Templates** - Full doc structure included
+- Reads project memory and current source of truth before acting.
+- Separates discovery/diagnosis from authorized implementation.
+- Creates the full documentation manifest without overwriting existing files.
+- Enforces thin entrypoints and one module per independent responsibility, without arbitrary line limits.
+- Routes security-sensitive changes through the `security-audit` skill.
+- Validates documentation completeness with a bundled script.
 
 ## Installation
 
@@ -17,55 +17,14 @@ Agent skill for development assistance with auto-documentation, context manageme
 npx skills add Prismas33/dev-assistant
 ```
 
-## Usage
+## Bundled tools
 
-The skill activates automatically when you:
-- Open a new project (setup mode)
-- Work on existing project (dev mode)
-- Ask investigation questions (discovery mode)
+```powershell
+# Create only missing documentation files
+.\scripts\init-project.ps1 -ProjectPath "C:\path\to\project"
 
-### Commands / Triggers
-
-- New project detected → Guided setup
-- "Read the memory" → Already done automatically
-- "Update diary" → Proposes entry
-- "Why is this happening?" → Investigation mode (no edits without confirmation)
-
-## Structure
-
-```
-dev-assistant/
-├── SKILL.md              # Main instructions
-├── README.md             # This file
-├── references/
-│   ├── checklists.md         # Quality gates
-│   ├── setup-questions.md    # New project questions
-│   └── template-structure.md # Template overview
-├── scripts/
-│   └── init-project.ps1      # Project setup script
-└── templates/                 # Embedded doc templates
-    ├── MEMORIA.md
-    ├── componentes/
-    ├── desenvolvimento/
-    ├── design/
-    ├── negocio/
-    ├── planeamento/
-    ├── produto/
-    └── tecnico/
+# Validate required structure
+.\scripts\validate-project-docs.ps1 -ProjectPath "C:\path\to\project" -StructureOnly
 ```
 
-## Behavior Modes
-
-| Mode | Trigger | Behavior |
-|------|---------|----------|
-| **Setup** | No `doc/` folder | Ask questions, create structure |
-| **Dev** | `doc/` exists | Auto-load context, propose updates |
-| **Discovery** | "why?", "how?", "investigate" | Research first, ask before editing |
-
-## Author
-
-Prismas33
-
-## License
-
-MIT
+The initializer preserves existing documentation by default. Use `-Overwrite` only with explicit authorization.

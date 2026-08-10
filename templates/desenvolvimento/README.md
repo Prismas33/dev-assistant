@@ -1,43 +1,20 @@
 # Desenvolvimento
 
-> Documentação técnica para a equipa de desenvolvimento.
+## Leitura obrigatória
 
----
+1. [`../MEMORIA.md`](../MEMORIA.md)
+2. [`regras-arquitetura-modular.md`](regras-arquitetura-modular.md)
+3. [`regras-codigo.md`](regras-codigo.md)
+4. [`regras-seguranca.md`](regras-seguranca.md)
+5. Regras de layout/documentação relevantes.
 
-## Documentos nesta pasta
+## Documentos
 
-| Documento | Descrição |
-|-----------|-----------|
-| [diario.md](diario.md) | Registo cronológico do progresso |
-| [regras-codigo.md](regras-codigo.md) | Convenções de código |
-| [regras-documentacao.md](regras-documentacao.md) | Como documentar |
-| [regras-layout.md](regras-layout.md) | Convenções de UI/UX |
-| [regras-seguranca.md](regras-seguranca.md) | Práticas de segurança |
+- [`diario.md`](diario.md): progresso significativo.
+- [`regras-arquitetura-modular.md`](regras-arquitetura-modular.md): separação por responsabilidade.
+- [`regras-codigo.md`](regras-codigo.md): convenções de implementação.
+- [`regras-documentacao.md`](regras-documentacao.md): manutenção documental.
+- [`regras-layout.md`](regras-layout.md): UI, responsividade e acessibilidade.
+- [`regras-seguranca.md`](regras-seguranca.md): baseline de segurança.
 
----
-
-## Quick Start
-
-### Antes de Começar
-1. Ler [regras-codigo.md](regras-codigo.md) para conhecer as convenções
-2. Configurar IDE com ESLint e Prettier
-3. Verificar [MEMORIA.md](../MEMORIA.md) para contexto do projeto
-
-### Durante o Desenvolvimento
-1. Seguir as convenções de código
-2. Atualizar [diario.md](diario.md) no final de cada sessão
-3. Fazer commits pequenos e frequentes
-
-### Antes de Commit
-1. Verificar linting: `npm run lint`
-2. Correr testes: `npm run test`
-3. Verificar tipos: `npm run type-check`
-4. Atualizar documentação se necessário
-
----
-
-## Recursos Úteis
-
-- [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/)
-- [React Documentation](https://react.dev/)
-- [Tailwind CSS](https://tailwindcss.com/docs)
+Os comandos concretos de lint, testes, typecheck e build devem vir do projeto e ser registados na memória após verificação; não assumir `npm` ou uma stack específica.

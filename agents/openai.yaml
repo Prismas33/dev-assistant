@@ -1,0 +1,7 @@
+interface:
+  display_name: "Dev Assistant"
+  short_description: "Project setup, architecture, docs, and quality gates"
+  default_prompt: "Use $dev-assistant to inspect this project, preserve its conventions, and complete the requested development work with appropriate documentation and validation."
+
+policy:
+  allow_implicit_invocation: true

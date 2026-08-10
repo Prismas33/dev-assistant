@@ -1,274 +1,117 @@
 ---
 name: dev-assistant
-description: "Development assistant with auto-documentation, context management and quality gates. In discovery mode, never edits without confirmation."
-metadata:
-  author: Prismas33
-  version: "1.1.0"
+description: Development workflow with project discovery, source-of-truth loading, safe setup, modular architecture, auto-documentation, and proportional quality gates. Use when starting or resuming a software project, inspecting an unfamiliar repository, implementing or fixing code, preparing project documentation, enforcing maintainable feature structure, reviewing project state, or deciding what validation and documentation a change requires. In discovery and bug-diagnosis requests, investigate and propose before editing unless the user explicitly asks for implementation.
 ---
 
 # Dev Assistant
 
-Assistente inteligente de desenvolvimento que mantém contexto, documenta automaticamente e segue padrões consistentes.
+## Start every task from evidence
 
----
+1. Inspect the repository structure, status, project instructions, package manifests, entrypoints, and relevant configuration before writing code.
+2. Search for and read the current project memory automatically: `doc/MEMORIA.md`, `docs/memory/PROJECT_MEMORY.md`, or `docs/memory/MEMORY_QUICK.md`.
+3. Read relevant project rules, ADRs, roadmap, recent diary entries, and the real runtime path for the requested behavior.
+4. Do not ask the user to repeat facts already present in the repository.
+5. Briefly state the structure and responsibility split to use before implementation.
 
-## 🎯 Modos de Operação
+If sources conflict, identify the conflict. Prefer accepted decisions and current code/runtime evidence over old summaries. Never silently invent missing product, security, legal, pricing, provider, or hosting decisions; record them as `TBD` or request direction when they materially change the result.
 
-### CRÍTICO: Descoberta vs Implementação
+## Classify the request
 
-| Tipo de Pedido | Exemplos | Comportamento |
-|----------------|----------|---------------|
-| **IMPLEMENTAÇÃO** | "cria X", "implementa Y", "adiciona Z", "corrige isto" | ✅ Posso editar diretamente |
-| **DESCOBERTA** | "porque será?", "o que aconteceu?", "como funciona?", "investiga" | 🔍 **INVESTIGAR PRIMEIRO** - Discutir, analisar, propor. **SÓ editar após confirmação** |
+### Discovery or diagnosis
 
-**Regra de Ouro:**
-```
-DÚVIDA/INVESTIGAÇÃO → Perguntar antes de mexer no código
-INSTRUÇÃO CLARA → Executar
-BUG REPORT → Investigar causa → Propor solução → Pedir confirmação → Só depois editar
-```
+Examples: investigate, review, explain, why did this happen, audit current behavior.
 
----
+- Inspect and report first.
+- Do not edit code, deploy, commit, or mutate external state without an explicit implementation request.
+- For a bug report, identify the root cause and propose the smallest fix before asking for confirmation.
 
-## 🚀 Comportamento Automático
+### Implementation
 
-### Ao Iniciar Sessão / Perder Contexto
+Examples: create, implement, add, fix, refactor, prepare, configure, update.
 
-1. **Verificar se existe documentação:**
-   - Procurar `doc/MEMORIA.md` ou `docs/memory/PROJECT_MEMORY.md` ou `docs/memory/MEMORY_QUICK.md`
-   - Se existir → Ler automaticamente (SEM pedir permissão)
-   - Se não existir → Ativar **Modo Setup**
+- Treat a clear imperative as authorization for scoped local changes.
+- Preserve current behavior outside the requested scope.
+- Implement, validate proportionally, and hand off the actual result.
+- Do not stop at a plan while safe in-scope implementation remains.
 
-2. **Carregar contexto relevante:**
-   - MEMORIA.md / PROJECT_MEMORY.md (contexto geral)
-   - diario.md / MEMORY_QUICK.md (últimas atividades)
-   - Ficheiros de regras se existirem
+### Documentation or setup
 
-3. **Nunca dizer:** "Precisa que eu leia a documentação?"
-   - **Ler automaticamente** quando necessário
-   - Informar brevemente: "Li o contexto do projeto. [resumo 1 linha]"
+- If the user explicitly asks to prepare/setup the project or create documentation, create the applicable structure without asking again.
+- If the user only asks whether setup is advisable, analyze and wait for confirmation.
+- Never overwrite existing project documentation automatically.
 
----
+## Set up a new project safely
 
-## 🆕 Modo Setup (Projeto Novo)
+When no recognized memory exists, read [references/setup-questions.md](references/setup-questions.md) and [references/documentation-manifest.md](references/documentation-manifest.md).
 
-Quando não existe `doc/MEMORIA.md` nem `docs/memory/`:
+1. Extract answers already available from source documents and repository context.
+2. Ask only for blocking information that cannot be inferred safely.
+3. Do not apply technology defaults as accepted decisions; mark unknown stack choices as `TBD`.
+4. Create every applicable required template, not a partial subset.
+5. Use `scripts/init-project.ps1` to create missing files without overwriting existing ones.
+6. Fill `doc/MEMORIA.md`, create the first diary entry, and validate with `scripts/validate-project-docs.ps1`.
+7. Report files created, files preserved, gaps, decisions, risks, validation, and the next approval boundary.
 
-### Passo 1: Perguntas Guiadas
-Fazer perguntas para preencher o template (ver `references/setup-questions.md`):
+The documentation manifest is a completeness contract. A folder listed in the full template must contain its expected files unless the project uses a documented legacy structure or a file is explicitly marked not applicable.
 
-1. **Nome do projeto?**
-2. **Que tipo de projeto?** (Web App, Mobile, API, Bot, CLI, etc.)
-3. **Stack tecnológico?** (Framework, DB, Auth, etc.)
-4. **Descrição em 1-2 frases?**
-5. **Problema que resolve?**
-6. **Público-alvo?**
+## Enforce modular architecture
 
-### Passo 2: Criar Estrutura
-Usar os templates embebidos em `templates/` desta skill para criar a estrutura `doc/` no projeto.
+Read [references/modular-architecture.md](references/modular-architecture.md) before scaffolding, implementing a feature, or reviewing maintainability.
 
-### Passo 3: Preencher MEMORIA.md
-Com as respostas do utilizador, preencher o template.
+- Keep `page`, `layout`, `App`, `main`, `index`, and other entry files thin: route concerns, metadata, dependency wiring, and composition only.
+- Give each independent responsibility its own component or module.
+- Extract a visual section when it has its own identity, behavior, state, tests, or evolution, even if currently used by one page.
+- Separate state/hooks, actions/queries, services/use-cases, repositories/data access, schemas/validation, types, helpers, constants, and configuration when those responsibilities exist.
+- Keep database access, fetch calls, external SDKs, privileged operations, and business rules out of visual components.
+- Organize dashboards and complex products by feature/domain.
+- Do not use arbitrary line limits. File size is a review signal; responsibility, coupling, testability, and independent evolution determine extraction.
+- Do not create empty layers or split trivial markup merely to increase file count.
 
-### Passo 4: Primeira Entrada no Diário
-Criar entrada inicial com data e "Início do projeto".
+Reject an implementation as incomplete when an entrypoint accumulates multiple independent UI sections, complex state, data access, validation, and business rules.
 
----
+## Apply security gates
 
-## 🔄 Modo Dev (Projeto Existente)
+For authentication, passwords, sessions, JWT, browser storage, cookies, CORS, CSP, CSRF, credentials, secrets, authorization, PII, uploads, payments, webhooks, logging, or production security deployment:
 
-### Auto-Contexto
-- **Início de sessão:** Ler MEMORIA.md automaticamente
-- **Quando perco contexto:** Reler documentação relevante
-- **Nunca perguntar:** "Quer que eu leia?" → Apenas ler
+1. Load and follow the `security-audit` skill before editing.
+2. Map browser/frontend, API/BFF, database, proxy/CDN, native or legacy clients, and deployment/rollback contracts as applicable.
+3. Define the smallest negative and positive tests that prove the change without breaking compatible clients.
+4. Deploy backend compatibility before a dependent frontend.
+5. Do not call the work complete based only on static analysis or a local build.
 
-### Após Implementações
-- Propor atualização do diário (se mudança significativa)
-- Propor atualização do MEMORIA.md (se mudança arquitetural)
-- Documentar decisões técnicas importantes
+## Validate proportionally
 
-### Seguir Regras do Projeto
-Se existirem, respeitar:
-- `regras-codigo.md` → Convenções de código
-- `regras-documentacao.md` → Como documentar
-- `regras-layout.md` → Padrões de UI
-- `regras-seguranca.md` → Práticas de segurança
+Read [references/checklists.md](references/checklists.md) for the applicable gate.
 
----
+- Run the narrowest useful lint, typecheck, tests, build, migration validation, or runtime check for the change.
+- Separate code-review evidence from build, device, staging, and production evidence.
+- Never claim a check passed if it was not run or did not complete.
+- Inspect existing long-running build/test processes before starting another.
+- Preserve unrelated user changes and report blockers honestly.
 
-## 📁 Estrutura de Documentação Esperada
+## Maintain project documentation
 
-### Estrutura Nova (template)
-```
-doc/
-├── MEMORIA.md              # Contexto principal do projeto
-├── CHANGELOG.md            # Histórico de versões (Keep a Changelog)
-├── componentes/            # Documentação de componentes
-├── desenvolvimento/
-│   ├── diario.md          # Histórico de desenvolvimento
-│   ├── regras-codigo.md
-│   ├── regras-documentacao.md
-│   └── regras-layout.md
-├── design/
-│   └── design-system.md
-├── negocio/
-│   ├── visao-geral.md
-│   └── modelo-negocio.md
-├── planeamento/
-│   ├── roadmap.md
-│   └── riscos.md
-├── produto/
-│   ├── features-mvp.md
-│   └── fluxo-produto.md
-└── tecnico/
-    ├── arquitetura.md
-    ├── integracoes.md
-    └── variaveis-ambiente.md
-```
+- Update documentation directly when the user asked for documentation/setup or when documentation is an explicit deliverable.
+- After code implementation, propose or perform diary, memory, component, ADR, and changelog updates according to the user's authorization and project rules.
+- Update `MEMORIA.md` for architectural or scope changes, not trivial edits.
+- Add diary entries for meaningful work and ADRs for durable technical decisions.
+- Keep code and identifiers in English; use Portuguese PT-PT for project documentation and explanatory comments unless project rules say otherwise.
+- Use Conventional Commits in English when committing.
+- Never place secrets, real PII, or credential-looking examples in documentation.
 
-### Estrutura Legacy (flexbot style)
-```
-docs/
-├── memory/
-│   ├── PROJECT_MEMORY.md   # Contexto principal
-│   └── MEMORY_QUICK.md     # Resumo rápido
-├── bugs/                   # Bugs não resolvidos
-├── fixes/                  # Bugs corrigidos
-├── incidents/              # Post-mortems
-├── guides/                 # Guias de setup
-└── planning/               # Planeamento
-```
+## Detect maintenance signals
 
-Deteto automaticamente qual estrutura existe e adapto.
+- Mention relevant `TODO` comments.
+- Prioritize `FIXME`.
+- Flag `HACK` and `TEMP` with their risk and removal condition.
+- Treat duplicated data access, repeated business logic, direct SDK calls in UI, and oversized entrypoints as architectural findings.
 
----
+## Bundled resources
 
-## ✅ Quality Gates
-
-### Antes de Commit (quando pedido)
-- [ ] Código testado localmente?
-- [ ] Sem console.log/print de debug?
-- [ ] Sem credenciais hardcoded?
-- [ ] Sem TODOs críticos pendentes?
-- [ ] Documentação atualizada se necessário?
-
-### Após Bug Fix
-- [ ] Root cause identificado?
-- [ ] Fix resolve a causa, não o sintoma?
-- [ ] Documentado em bugs/ ou fixes/?
-- [ ] Testes adicionados para prevenir regressão?
-
-### Após Feature
-- [ ] MEMORIA.md precisa update?
-- [ ] Entrada no diário?
-- [ ] CHANGELOG.md atualizado?
-- [ ] Componentes documentados?
-
----
-
-## 📋 Manutenção do CHANGELOG
-
-### Quando Propor Entrada
-- Após implementar **nova feature**
-- Após corrigir **bug**
-- Após fazer **breaking change**
-- Após corrigir **vulnerabilidade de segurança**
-
-### Formato (Keep a Changelog)
-```markdown
-## [Unreleased]
-
-### Added
-- Nova funcionalidade X para fazer Y (#issue)
-
-### Fixed
-- Corrigido bug onde Z acontecia em condição W
-```
-
-### Comportamento
-1. **Não adicionar automaticamente** - Propor a entrada
-2. Sugerir categoria apropriada (Added/Changed/Fixed/etc.)
-3. Sugerir bump de versão se aplicável:
-   - **PATCH** (0.0.X): Bug fixes
-   - **MINOR** (0.X.0): Novas features compatíveis
-   - **MAJOR** (X.0.0): Breaking changes
-4. Ao fazer release, lembrar de mover [Unreleased] para versão datada
-
-### Exemplo de Proposta
-> "Feature implementada. Proponho adicionar ao CHANGELOG:
-> ```
-> ### Added
-> - Sistema de notificações por email (#42)
-> ```
-> Sugestão de versão: 1.3.0 → 1.4.0 (nova feature)"
-
----
-
-## 🐛 Documentação de Incidentes
-
-Quando há bug/incidente, seguir template:
-
-```markdown
-# [BUG/INCIDENT]: Título Descritivo
-
-**Data:** YYYY-MM-DD
-**Severity:** LOW/MEDIUM/HIGH/CRITICAL
-**Status:** INVESTIGATING/RESOLVED
-
-## Sintomas
-O que foi observado.
-
-## Root Cause
-Porque aconteceu.
-
-## Solução
-O que foi feito para resolver.
-
-## Prevenção
-Como evitar no futuro.
-```
-
----
-
-## 📝 Convenções
-
-### Linguagem
-- **Código:** Inglês
-- **Comentários:** Português PT-PT
-- **Documentação:** Português PT-PT
-- **Commits:** Inglês (conventional commits)
-
-### Nomenclatura de Ficheiros
-- kebab-case: `regras-codigo.md`
-- Prefixos: `BUG_`, `FIX_`, `INCIDENT_`
-
----
-
-## 🔗 Ficheiros de Referência
-
-Para detalhes completos, consultar:
-- `references/template-structure.md` - Estrutura completa do template
-- `references/setup-questions.md` - Perguntas para novo projeto
-- `references/checklists.md` - Todas as checklists
-- `templates/` - Templates de documentação prontos a usar
-
----
-
-## 💡 Comportamentos Especiais
-
-### Deteção de Problemas
-Se encontrar no código:
-- `// TODO:` → Mencionar se relevante
-- `// HACK:` ou `// TEMP:` → Alertar
-- `// FIXME:` → Priorizar
-
-### Atualização de Docs
-Propor (não fazer automaticamente):
-- "Esta mudança afeta a arquitetura. Atualizo o MEMORIA.md?"
-- "Implementação concluída. Adiciono entrada no diário?"
-
-### Recuperação de Contexto
-Se o utilizador perguntar algo que requer contexto:
-1. Ler docs relevantes silenciosamente
-2. Responder com contexto
-3. Não dizer "Deixa-me ler primeiro" → Apenas fazer
+- [references/documentation-manifest.md](references/documentation-manifest.md): required setup structure and source-of-truth rules.
+- [references/modular-architecture.md](references/modular-architecture.md): responsibility boundaries and review gate.
+- [references/setup-questions.md](references/setup-questions.md): questions for genuinely missing context.
+- [references/checklists.md](references/checklists.md): proportional quality gates.
+- `templates/`: merge-safe project documentation templates.
+- `scripts/init-project.ps1`: create missing template files without overwriting project files.
+- `scripts/validate-project-docs.ps1`: verify documentation completeness and placeholders.

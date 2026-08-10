@@ -1,114 +1,37 @@
-# Setup Questions - New Project
+# Setup questions
 
-When a new project is detected (no `doc/MEMORIA.md`), ask these questions:
+Ask only for information that is both missing from the repository and necessary for the requested setup.
 
----
+## Core context
 
-## Required Questions
+1. What is the project name, or should it remain `TBD`?
+2. What kind of product is it?
+3. What problem does it solve?
+4. Who is it for?
+5. What scope is required for the first usable version?
 
-### 1. Identification
-```
-What's the project name?
-```
+## Technical context
 
-### 2. Project Type
-```
-What type of project?
-- Web App (SPA/SSR)
-- Mobile App (React Native/Flutter)
-- API Backend
-- Bot/Automation
-- CLI Tool
-- Other: ___
-```
+Ask only when the answer affects immediate work:
 
-### 3. Tech Stack
-```
-What's the tech stack?
+- frontend/runtime/framework;
+- backend/API;
+- database and migrations;
+- authentication and authorization;
+- hosting/environments;
+- external integrations;
+- test and deployment expectations.
 
-Frontend: [Next.js / React / Vue / Svelte / Other]
-Backend: [Node.js / Python / Go / Other]
-Database: [PostgreSQL / MySQL / MongoDB / Supabase / Firebase / Other]
-Auth: [Firebase / NextAuth / Clerk / Custom / Other]
-Hosting: [Vercel / Railway / DigitalOcean / AWS / Other]
-```
+Do not default silently to Next.js, Node.js, PostgreSQL, Supabase, Firebase, a payment provider, or a hosting provider. Use `TBD` until the user or an accepted project decision chooses them.
 
-### 4. Description
-```
-Describe the project in 1-2 sentences:
-```
+## Setup flow
 
-### 5. Problem
-```
-What problem does it solve? What's the user's pain point?
-```
-
-### 6. Audience
-```
-Who's the target audience?
-```
-
----
-
-## Optional Questions (if relevant)
-
-### 7. Business Model
-```
-How will it generate revenue?
-- SaaS (subscription)
-- Freemium
-- One-time purchase
-- Ads
-- Other
-- Not defined yet
-```
-
-### 8. MVP Scope
-```
-What are the essential MVP features?
-```
-
-### 9. Timeline
-```
-Is there a specific deadline or timeline?
-```
-
-### 10. Integrations
-```
-Will it integrate with external services?
-(APIs, payments, email, etc.)
-```
-
----
-
-## Defaults (if no answer)
-
-| Field | Default |
-|-------|---------|
-| Name | Project folder name |
-| Type | Web App |
-| Frontend | Next.js 14 |
-| Backend | Node.js |
-| Database | PostgreSQL |
-| Auth | To be defined |
-| Hosting | To be defined |
-
----
-
-## Setup Flow
-
-```
-1. DETECT new project (no doc/)
-   ↓
-2. ASK: "I detected this is a new project. Want me to set up documentation?"
-   ↓
-3. IF yes → Guided questions
-   ↓
-4. CREATE doc/ structure from templates
-   ↓
-5. FILL MEMORIA.md with answers
-   ↓
-6. CREATE first diary entry
-   ↓
-7. CONFIRM: "Documentation created! Summary: [...]"
-```
+1. Inspect existing files and extract known answers.
+2. Classify the request as documentation-only or full technical setup.
+3. Ask only blocking questions.
+4. State the proposed responsibility split.
+5. Create all applicable missing templates merge-safely.
+6. Fill known content and mark genuine open decisions as `TBD`.
+7. Create the first diary entry.
+8. Run the documentation validator.
+9. Report created, preserved, unresolved, and unvalidated items.

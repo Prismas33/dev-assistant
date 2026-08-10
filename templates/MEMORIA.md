@@ -1,188 +1,71 @@
-# [NOME_PROJETO] - Memória do Projeto
+# Memória do projeto
 
-> Este documento serve como contexto principal para desenvolvimento e assistentes de IA.
-> Atualizar sempre que houver mudanças significativas na arquitetura ou scope.
+> Contexto operacional para retomar o projeto sem depender da conversa anterior.
 
----
+**Atualizado em:** TBD
+**Nome:** TBD
+**Estado:** TBD
 
-## 🎯 Visão Geral
+## Visão
 
-**O que é:** [Descrição em 1-2 frases]
+**O que é:** TBD
+**Problema:** TBD
+**Público-alvo:** TBD
+**Proposta de valor:** TBD
 
-**Problema que resolve:** [Qual dor do utilizador resolve]
+## Fonte de verdade
 
-**Público-alvo:** [Quem são os utilizadores]
+Indicar os documentos, ADRs e runtime que prevalecem quando existir conflito.
 
-**Proposta de valor:** [Porque é melhor que alternativas]
+## Stack confirmada
 
----
+- Frontend/runtime: TBD
+- Backend/API: TBD
+- Base de dados: TBD
+- Auth/autorização: TBD
+- Hosting/ambientes: TBD
+- Testes e CI: TBD
 
-## 🛠️ Stack Técnico
+Não transformar uma preferência ou hipótese numa decisão aceite.
 
-### Frontend
-- **Framework:** [Next.js X.X / React X.X / Vue X.X]
-- **Styling:** [Tailwind CSS vX / CSS Modules / Styled Components]
-- **State:** [Zustand / Redux / Context API]
-- **Forms:** [React Hook Form / Formik]
+## Arquitetura e estrutura
 
-### Backend
-- **Runtime:** [Node.js / Deno / Bun]
-- **API:** [REST / GraphQL / tRPC]
-- **Auth:** [Supabase Auth / NextAuth / Clerk]
+Descrever os domínios/features, entrypoints, fronteiras de dados, integrações e localização das migrations. Pages/layouts devem permanecer finos; responsabilidades independentes ficam em módulos próprios.
 
-### Base de Dados
-- **DB:** [PostgreSQL / MySQL / MongoDB]
-- **ORM:** [Prisma / Drizzle / TypeORM]
-- **Hosting:** [Supabase / PlanetScale / Railway]
+## Utilizadores e permissões
 
-### Infraestrutura
-- **Hosting:** [Vercel / Railway / AWS]
-- **CDN:** [Cloudflare / Vercel Edge]
-- **Storage:** [S3 / Cloudflare R2 / Supabase Storage]
+Documentar papéis, contexto de cada papel e limites. A UI não substitui autorização server-side.
 
----
+## Dados e APIs
 
-## 📁 Estrutura do Projeto
+Resumir entidades, relações, ownership/tenant, dados públicos/privados e endpoints/contratos já implementados. Não inventar tabelas ou endpoints futuros.
 
-```
-/
-├── src/
-│   ├── app/              # Páginas (App Router)
-│   ├── components/       # Componentes React
-│   │   ├── ui/          # Componentes base (Button, Input, etc.)
-│   │   ├── features/    # Componentes de feature
-│   │   ├── layout/      # Header, Footer, Sidebar
-│   │   └── sections/    # Secções de página
-│   ├── lib/             # Utilitários e serviços
-│   │   ├── supabase/    # Clients Supabase
-│   │   ├── services/    # Lógica de negócio
-│   │   └── validations/ # Schemas Zod
-│   ├── hooks/           # Custom hooks
-│   ├── types/           # TypeScript types
-│   └── constants/       # Constantes
-├── public/              # Assets estáticos
-├── doc/                 # Documentação
-└── [db-folder]/         # Migrations (supabase/, prisma/, etc.)
-```
+## Comandos verificados
 
----
+| Objetivo | Comando | Estado |
+| --- | --- | --- |
+| Instalar | TBD | Não verificado |
+| Desenvolvimento | TBD | Não verificado |
+| Lint/typecheck | TBD | Não verificado |
+| Testes | TBD | Não verificado |
+| Build | TBD | Não verificado |
 
-## 👥 Tipos de Utilizador
+## Estado atual
 
-| Tipo | Descrição | Permissões |
-|------|-----------|------------|
-| [Tipo 1] | [Descrição] | [Lista de permissões] |
-| [Tipo 2] | [Descrição] | [Lista de permissões] |
-| [Admin] | [Descrição] | [Acesso total] |
+- Implementado: TBD
+- Em curso: TBD
+- Bloqueios: TBD
+- Próximo passo aprovado: TBD
 
----
+## Decisões abertas
 
-## 🗄️ Modelo de Dados (Principais)
+- TBD
 
-### [Tabela Principal]
-```sql
-- id: UUID (PK)
-- user_id: UUID (FK -> auth.users)
-- [campo]: [tipo]
-- created_at: timestamp
-- updated_at: timestamp
-```
+## Regras de continuidade
 
-### [Outra Tabela]
-```sql
-- id: UUID (PK)
-- [referencia]_id: UUID (FK)
-- [campo]: [tipo]
-- status: enum
-```
-
----
-
-## 🔐 Autenticação & Autorização
-
-### Fluxo de Auth
-1. [Passo 1]
-2. [Passo 2]
-3. [Passo 3]
-
-### Proteção de Rotas
-- **Públicas:** `/`, `/login`, `/registo`
-- **Autenticadas:** `/dashboard/*`, `/perfil`
-- **Admin:** `/admin/*`
-
-### Row Level Security (RLS)
-- [Tabela X]: Users só vêem próprios registos
-- [Tabela Y]: [Regra específica]
-
----
-
-## 📊 APIs Principais
-
-| Endpoint | Método | Descrição | Auth |
-|----------|--------|-----------|------|
-| `/api/[recurso]` | GET | Listar | ✅ |
-| `/api/[recurso]` | POST | Criar | ✅ |
-| `/api/[recurso]` | PUT | Atualizar | ✅ |
-| `/api/[recurso]` | DELETE | Apagar | ✅ |
-
----
-
-## 💰 Modelo de Negócio
-
-### Planos
-| Plano | Preço | Features |
-|-------|-------|----------|
-| Free | €0 | [Features básicas] |
-| Pro | €X/mês | [Features avançadas] |
-| Enterprise | Custom | [Tudo + suporte] |
-
-### Métricas Chave
-- [KPI 1]
-- [KPI 2]
-- [KPI 3]
-
----
-
-## 🚀 Estado Atual
-
-### Fase
-- [ ] Ideação
-- [ ] MVP
-- [ ] Beta
-- [ ] Produção
-- [ ] Escala
-
-### Últimas Alterações
-- [Data]: [Descrição]
-- [Data]: [Descrição]
-
-### Próximos Passos
-- [ ] [Tarefa prioritária 1]
-- [ ] [Tarefa prioritária 2]
-- [ ] [Tarefa prioritária 3]
-
----
-
-## 🔗 Links Úteis
-
-- **Repo:** [URL]
-- **Staging:** [URL]
-- **Produção:** [URL]
-- **Design:** [Figma URL]
-- **DB Dashboard:** [Supabase/outro URL]
-
----
-
-## 📝 Notas para IA
-
-Ao trabalhar neste projeto:
-
-1. **Linguagem:** Código em inglês, comentários/docs em português PT-PT
-2. **Estilo:** [Preferências de código - ver regras-codigo.md]
-3. **Commits:** Conventional commits em inglês
-4. **Testes:** [Estratégia de testes]
-
-### Contexto Importante
-- [Nota específica 1]
-- [Nota específica 2]
-- [Decisão técnica importante]
+1. Ler este ficheiro, regras, ADRs e diário recente antes de editar.
+2. Preservar comportamento e alterações fora do scope.
+3. Organizar por responsabilidade e feature sem limites artificiais de linhas.
+4. Atualizar memória apenas para mudanças relevantes de arquitetura/scope.
+5. Registar trabalho significativo no diário.
+6. Ativar revisão de segurança para mudanças sensíveis.
