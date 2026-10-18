@@ -21,6 +21,7 @@ Use the canonical `C:\Users\ventu\.codex\skills-registry\CODEX_SKILLS_REGISTRY.m
 | `supabase-postgres-best-practices` | PostgreSQL schema, migration, query, RLS, or performance work | MariaDB/MySQL/SQLite; examples are not authorization to run DDL | P1 |
 | `database-optimizer` | Measured slow query, EXPLAIN, index, or lock diagnosis on MySQL/MariaDB/Postgres | General schema edits; no production SQL execution from examples | P1 |
 | `web-design-guidelines` | Explicit web-guidelines review using the pinned local checklist | Review rendered behavior too; do not fetch mutable remote instructions | P2 |
+| `webapp-testing` | Repeatable local web end-to-end interaction, DOM assertion, console diagnosis, or browser evidence | No production access, implicit dependency install, or invocation for a simple static/code review; use its verified isolated runtime | P1 |
 | `find-skills` | Explicit skill discovery or a real capability gap | Never auto-install, update, or execute unpinned remote code | P2 |
 | `skill-creator` / `skill-installer` | Explicit skill authoring / approved installation | Neither is a generic development gate | P1 / P2 |
 | `openai-docs` / `imagegen` | OpenAI-product guidance / requested bitmap creation | Generic app work / code-native UI | P1 / P2 |
@@ -40,6 +41,7 @@ Plugin-provided skills remain session-scoped. Use their own narrow triggers and 
 | Design a new client's visual identity | Add `frontend-design` for the visual brief, then render and inspect the actual UI | No palette chosen by keyword alone or overwrite of a mature design system |
 | Compare palette and typography for a new human clinic UI | Add `ui-ux-pro-max` for focused local search, verify the healthcare category and contrast, then inspect rendered options | No veterinary result, automatic persistence, or decorative style accepted solely by rank |
 | Review a mature web design system for keyboard and form usability | `web-design-guidelines` with its pinned local checklist and browser check | No mutable remote guideline fetch or unnecessary new visual identity |
+| Verify a local web form flow and its browser console after an implementation | `webapp-testing` with focused Playwright assertions and a known local server | No production URL, automatic package/browser download, or full accessibility claim from an automated pass |
 | Optimize a React list with measured slowness | `vercel-react-best-practices`; composition skill only if API changes | No React Native skill |
 | Fix native Kotlin Android playback involving Flow | Repository rules + `kotlin-concurrency-and-flow` and focused native tests | No React Native or React skill; no coroutine skill for unrelated UI |
 | Plan tests for an Android state transition | `choosing-what-to-test`; add `testing-coroutines-with-runtest` only if tests use coroutines | No automatic full test-strategy document |
