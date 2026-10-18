@@ -116,6 +116,15 @@ class RegistryTests(unittest.TestCase):
         self.assertEqual(alpha["commit"], "não fixado")
         self.assertTrue(any("alpha" in warning for warning in warnings))
 
+    def test_generated_python_cache_and_gitignore_do_not_change_package_hash(self) -> None:
+        package = self.codex / "skills" / "alpha"
+        before = sha256_folder(package)
+        (package / ".gitignore").write_text("__pycache__/\n", encoding="utf-8")
+        cache = package / "__pycache__"
+        cache.mkdir()
+        (cache / "generated.pyc").write_bytes(b"generated cache")
+        self.assertEqual(sha256_folder(package), before)
+
     def test_partial_rg_results_survive_unrelated_scan_error(self) -> None:
         expected = self.projects / "client" / ".agents" / "skills" / "beta" / "SKILL.md"
         with patch("skills_registry_inventory.shutil.which", return_value="rg"), patch(

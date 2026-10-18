@@ -10,7 +10,7 @@ import subprocess
 from pathlib import Path
 
 
-SKIP_PARTS = {".git", "node_modules", "build", "dist", ".next", ".venv", "venv"}
+SKIP_PARTS = {".git", ".gitignore", ".pytest_cache", "__pycache__", "node_modules", "build", "dist", ".next", ".venv", "venv"}
 
 
 def sha256_file(path: Path) -> str:
