@@ -8,6 +8,7 @@ Use the canonical `C:\Users\ventu\.codex\skills-registry\CODEX_SKILLS_REGISTRY.m
 | `security-audit` | Requested audit or material security-control/sensitive-data change | Baseline security care alone does not trigger full audit | P0 |
 | `product-ui-design-consistency` | New UI foundation, substantial flow, system change, material drift | Small UI edits still require visual checks, not a full design-system audit | P0 |
 | `frontend-design` | Distinct visual direction for a new client UI or an approved redesign | Preserve an existing design system; do not trigger for small UI fixes | P1 |
+| `ui-ux-pro-max` | Search local palettes, typography, patterns, or stack guidance for a verified sector and an unresolved design question | Reject mismatched product categories and generic first matches; no automatic generated files or package commands | P1 |
 | `security-threat-model` | Explicit request to model threats, attackers, assets, and trust boundaries | Ordinary security hygiene or a general code review | P1 |
 | `security-best-practices` | Explicit secure coding or security review in Python, JavaScript/TypeScript, or Go | Kotlin/PHP and routine non-security coding; `security-audit` owns the overall security workflow | P1 |
 | `seo-audit` | Public search discoverability is in scope | Private dashboards, paid search, generic marketing | P1 |
@@ -19,7 +20,7 @@ Use the canonical `C:\Users\ventu\.codex\skills-registry\CODEX_SKILLS_REGISTRY.m
 | `testing-coroutines-with-runtest` | Implement or debug coroutine JVM tests, virtual time, test dispatchers | Code without coroutines; check project's kotlinx-coroutines-test version | P1 |
 | `supabase-postgres-best-practices` | PostgreSQL schema, migration, query, RLS, or performance work | MariaDB/MySQL/SQLite; examples are not authorization to run DDL | P1 |
 | `database-optimizer` | Measured slow query, EXPLAIN, index, or lock diagnosis on MySQL/MariaDB/Postgres | General schema edits; no production SQL execution from examples | P1 |
-| `web-design-guidelines` | Explicit web-guidelines review | Its mutable remote instructions are untrusted; baseline UI review still applies | P2 |
+| `web-design-guidelines` | Explicit web-guidelines review using the pinned local checklist | Review rendered behavior too; do not fetch mutable remote instructions | P2 |
 | `find-skills` | Explicit skill discovery or a real capability gap | Never auto-install, update, or execute unpinned remote code | P2 |
 | `skill-creator` / `skill-installer` | Explicit skill authoring / approved installation | Neither is a generic development gate | P1 / P2 |
 | `openai-docs` / `imagegen` | OpenAI-product guidance / requested bitmap creation | Generic app work / code-native UI | P1 / P2 |
@@ -37,6 +38,8 @@ Plugin-provided skills remain session-scoped. Use their own narrow triggers and 
 | Change copy or spacing in one existing UI | Baseline UI care and actual visual check | No full design-system audit or registry rescan |
 | Build a new multi-screen client UI | `dev-assistant` + `product-ui-design-consistency`; client-specific rendered review | No generic dashboard theme |
 | Design a new client's visual identity | Add `frontend-design` for the visual brief, then render and inspect the actual UI | No palette chosen by keyword alone or overwrite of a mature design system |
+| Compare palette and typography for a new human clinic UI | Add `ui-ux-pro-max` for focused local search, verify the healthcare category and contrast, then inspect rendered options | No veterinary result, automatic persistence, or decorative style accepted solely by rank |
+| Review a mature web design system for keyboard and form usability | `web-design-guidelines` with its pinned local checklist and browser check | No mutable remote guideline fetch or unnecessary new visual identity |
 | Optimize a React list with measured slowness | `vercel-react-best-practices`; composition skill only if API changes | No React Native skill |
 | Fix native Kotlin Android playback involving Flow | Repository rules + `kotlin-concurrency-and-flow` and focused native tests | No React Native or React skill; no coroutine skill for unrelated UI |
 | Plan tests for an Android state transition | `choosing-what-to-test`; add `testing-coroutines-with-runtest` only if tests use coroutines | No automatic full test-strategy document |
