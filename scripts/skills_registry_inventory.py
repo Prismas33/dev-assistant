@@ -173,6 +173,7 @@ def discover_skills(codex_home: Path, agents_home: Path, utilities: Path, projec
             "license": data["license"] or policy.get("license", "não declarada"),
             "commit": commit or "não fixado",
             "installed_at": lock.get("installedAt", "") or policy.get("installed_at", "não verificada"),
+            "updated_at": policy.get("updated_at", "") or lock.get("updatedAt", "") or "não verificada",
             "source": source or "não declarada",
             "source_url": source_url or "não declarado",
             "skill_url": direct_url or "não declarado",

@@ -92,7 +92,7 @@ def render_catalog(entries: list[dict], plugins: list[dict], metadata: dict, eve
         "",
         "## Skills encontradas",
         "",
-        "| Skill / âmbito | Descrição | Origem / URL de SKILL.md | Versão / commit / instalação | Localização / SHA-256 | Categoria / tecnologias / projetos | Ativação / exclusões | Licença / dependências / auditoria |",
+        "| Skill / âmbito | Descrição | Origem / material auditado | Versão / commit / datas | Localização / SHA-256 | Categoria / tecnologias / projetos | Ativação / exclusões | Licença / dependências / auditoria |",
         "| --- | --- | --- | --- | --- | --- | --- | --- |",
     ]
     for item in entries:
@@ -103,7 +103,7 @@ def render_catalog(entries: list[dict], plugins: list[dict], metadata: dict, eve
                 f"`{esc(item['name'])}` / {esc(item['scope'])}",
                 esc(item["description"] or "sem descrição"),
                 origin,
-                f"{esc(item['version'])}; `{esc(item['commit'])}`; {esc(item['installed_at'])}",
+                f"{esc(item['version'])}; `{esc(item['commit'])}`; instalação {esc(item['installed_at'])}; atualização {esc(item['updated_at'])}",
                 f"`{esc(item['path'])}`; `{item['sha256'][:16]}…`",
                 f"{esc(item['category'])}; {esc(item['technologies'])}; {esc(item['projects'])}",
                 f"{esc(item['trigger'])}; {esc(item['exclusions'])}",
