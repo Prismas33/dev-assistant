@@ -22,6 +22,10 @@ Use the canonical `C:\Users\ventu\.codex\skills-registry\CODEX_SKILLS_REGISTRY.m
 | `database-optimizer` | Measured slow query, EXPLAIN, index, or lock diagnosis on MySQL/MariaDB/Postgres | General schema edits; no production SQL execution from examples | P1 |
 | `web-design-guidelines` | Explicit web-guidelines review using the pinned local checklist | Review rendered behavior too; do not fetch mutable remote instructions | P2 |
 | `webapp-testing` | Repeatable local web end-to-end interaction, DOM assertion, console diagnosis, or browser evidence | No production access, implicit dependency install, or invocation for a simple static/code review; use its verified isolated runtime | P1 |
+| `frontend-testing-debugging` | Explicit rendered frontend QA or interaction/console/responsive debugging with a defined user flow | Use `webapp-testing` for a focused repeatable Playwright test; no routine invocation for every small UI edit or production URL | P1 |
+| `web-accessibility` | Focused web accessibility design, audit, keyboard/focus/form/ARIA problem, or WCAG evidence | Baseline accessible UI care does not trigger full audit; no Android-native or automatic conformance claim | P1 |
+| `gh-fix-ci` | A GitHub PR has failing GitHub Actions checks and gh authentication is available | No external CI provider, routine local test failure, or unauthenticated log claim | P1 |
+| `codex-security:security-scan` | Explicit repository-wide or scoped security scan when plugin is exposed and runtime preflight succeeds | Baseline security and ordinary code review use `security-audit`; no production access or silent config expansion | P1 |
 | `find-skills` | Explicit skill discovery or a real capability gap | Never auto-install, update, or execute unpinned remote code | P2 |
 | `skill-creator` / `skill-installer` | Explicit skill authoring / approved installation | Neither is a generic development gate | P1 / P2 |
 | `openai-docs` / `imagegen` | OpenAI-product guidance / requested bitmap creation | Generic app work / code-native UI | P1 / P2 |
@@ -42,6 +46,10 @@ Plugin-provided skills remain session-scoped. Use their own narrow triggers and 
 | Compare palette and typography for a new human clinic UI | Add `ui-ux-pro-max` for focused local search, verify the healthcare category and contrast, then inspect rendered options | No veterinary result, automatic persistence, or decorative style accepted solely by rank |
 | Review a mature web design system for keyboard and form usability | `web-design-guidelines` with its pinned local checklist and browser check | No mutable remote guideline fetch or unnecessary new visual identity |
 | Verify a local web form flow and its browser console after an implementation | `webapp-testing` with focused Playwright assertions and a known local server | No production URL, automatic package/browser download, or full accessibility claim from an automated pass |
+| Debug a rendered dashboard control and report UI evidence | `frontend-testing-debugging` for a named flow, console, interaction, and viewport checks; `webapp-testing` only if its automation adds distinct proof | No second browser workflow by default or invented screenshot |
+| Review keyboard focus and error recovery in a web form | `web-accessibility` with targeted manual and browser evidence | No WCAG conformance verdict from a linter, no Android-native routing |
+| Investigate failing checks on a GitHub PR | `gh-fix-ci` after gh auth status and PR identity | No invocation for local CI or unauthenticated logs |
+| Scan a local repository for security vulnerabilities | `codex-security:security-scan` when exposed, authorized, and preflight ready; keep ordinary security baseline | No scan for every code edit or production target |
 | Optimize a React list with measured slowness | `vercel-react-best-practices`; composition skill only if API changes | No React Native skill |
 | Fix native Kotlin Android playback involving Flow | Repository rules + `kotlin-concurrency-and-flow` and focused native tests | No React Native or React skill; no coroutine skill for unrelated UI |
 | Plan tests for an Android state transition | `choosing-what-to-test`; add `testing-coroutines-with-runtest` only if tests use coroutines | No automatic full test-strategy document |
