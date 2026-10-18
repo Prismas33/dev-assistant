@@ -12,6 +12,7 @@ Codex skill for repository discovery, project continuity, safe documentation set
 - Applies baseline security, UI/UX, testing, and documentation standards while reserving full specialist workflows for their actual triggers.
 - Routes material security changes through the `security-audit` skill.
 - Validates documentation completeness with a bundled script.
+- Reconciles the central C: skills registry with installed packages and mirrors verified history to E: when projects begin or the skill inventory changes.
 
 ## Installation
 
@@ -30,3 +31,9 @@ npx skills add Prismas33/dev-assistant
 ```
 
 The initializer preserves existing documentation by default. Use `-Overwrite` only with explicit authorization.
+
+## Central skills registry
+
+The canonical catalog is `C:\Users\ventu\.codex\skills-registry\CODEX_SKILLS_REGISTRY.md`; `E:\utilitarios\CODEX_SKILLS_REGISTRY.md` is the verified mirror. Run `python scripts/skills_registry.py reconcile` after approved skill changes or at a new project when the registry is stale. Run `python scripts/skills_registry.py verify` to check the catalog, mirror, and source archives. See `references/skills-registry.md` for scope and recovery.
+
+For a previously audited skill change, `scripts/invoke-managed-skill-change.ps1` runs the exact reviewed command and reconciles on success. The wrapper does not choose or download packages.

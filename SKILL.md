@@ -2,7 +2,7 @@
 name: dev-assistant
 description: Development workflow and skill coordinator for project discovery, safe setup, modular architecture, documentation, and proportional quality gates. Use when starting or resuming a software project, implementing or fixing code, reviewing a repository, or deciding which available specialist skills and validations apply. In discovery and bug diagnosis, investigate and propose before editing unless implementation is requested.
 metadata:
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # Dev Assistant
@@ -19,7 +19,7 @@ If sources conflict, identify the conflict. Prefer accepted decisions and curren
 
 ## Coordinate available skills
 
-At the start of a new project, or when resuming one without a reliable selection, confirm the actual stack from manifests and code, then identify the product goals, users and interfaces, data boundaries, risk, and development phase. Inspect the skills actually exposed in the session and the repository; read [references/skill-catalog.md](references/skill-catalog.md) for the relevant candidates. Do not infer a stack from a project name or install or update skills as part of selection.
+At the start of a new project, or when resuming one without a reliable selection, confirm the actual stack from manifests and code, then identify the product goals, users and interfaces, data boundaries, risk, and development phase. Read the canonical registry at `C:\Users\ventu\.codex\skills-registry\CODEX_SKILLS_REGISTRY.md` for installed versions and audit status. If missing or older than seven days, reconcile once using [references/skills-registry.md](references/skills-registry.md); do not recheck on every small task. Inspect skills actually exposed in the session and the repository; use [references/skill-catalog.md](references/skill-catalog.md) for routing. Do not infer a stack from a project name or install or update skills as part of selection.
 
 Select only skills whose trigger and dependencies match the task. Prefer a repository-specific instruction or accepted design decision over generic skill advice, subject to higher-priority safety and user instructions. A specialist skill adds a workflow for its own domain; it does not grant permission for deployments, remote installs, credentials, or destructive actions. If two skills overlap, use the narrower one for the concrete concern and combine them only when both add distinct checks.
 
@@ -32,7 +32,7 @@ Apply these baseline standards on every relevant change, even when no specialist
 - **Tests:** choose focused tests and runtime checks that cover the behavior and meaningful failure cases. State which gates ran and which did not.
 - **Documentation:** update the canonical project documentation when decisions, contracts, architecture, operational behavior, or scope materially change; avoid new documents and diary entries for trivial edits.
 
-Following a baseline rule is not the same as running a complete specialist skill. Read only the skill and references needed for the current work.
+Following a baseline rule is not the same as running a complete specialist skill. Read only the skill and references needed for the current work. Run approved skill installations, updates, and removals through `scripts/invoke-managed-skill-change.ps1` so the registry and E: backup reconcile after success. Reconcile changes made outside this process periodically before reporting the inventory as current.
 
 ## Classify the request
 
@@ -133,7 +133,10 @@ Read [references/checklists.md](references/checklists.md) for the applicable gat
 - [references/modular-architecture.md](references/modular-architecture.md): responsibility boundaries and review gate.
 - [references/setup-questions.md](references/setup-questions.md): questions for genuinely missing context.
 - [references/checklists.md](references/checklists.md): proportional quality gates.
-- [references/skill-catalog.md](references/skill-catalog.md): scoped skill catalog, exclusions, and activation checks; read at onboarding or material re-selection.
+- [references/skill-catalog.md](references/skill-catalog.md): routing rules and activation checks; read at onboarding or material re-selection.
+- [references/skills-registry.md](references/skills-registry.md): canonical registry, reconciliation, backup, and recovery procedure.
+- `scripts/skills_registry.py`: read-only inventory with atomic catalog/backup updates and guarded restore; use only on onboarding, material changes, or skill management.
+- `scripts/invoke-managed-skill-change.ps1`: run one already reviewed skill change, then reconcile automatically; no remote package is selected by the wrapper.
 - `templates/`: merge-safe project documentation templates.
 - `scripts/init-project.ps1`: create missing template files without overwriting project files.
 - `scripts/validate-project-docs.ps1`: verify documentation completeness and placeholders.
