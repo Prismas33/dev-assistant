@@ -93,9 +93,8 @@ def _local_skill_files(project_root: Path) -> list[Path]:
             timeout=90,
             check=False,
         )
-        if result.returncode in (0, 1):
-            found = [Path(line) for line in result.stdout.splitlines()]
-    else:
+        found = [Path(line) for line in result.stdout.splitlines()]
+    if not found and (not shutil.which("rg") or result.returncode not in (0, 1)):
         for directory, dirs, files in __import__("os").walk(project_root):
             dirs[:] = [name for name in dirs if name not in SKIP_PARTS]
             if "SKILL.md" in files:

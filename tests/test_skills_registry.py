@@ -8,6 +8,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 from zipfile import ZipFile
 
 SCRIPT = Path(__file__).with_name("skills_registry.py")
@@ -15,6 +16,7 @@ if not SCRIPT.is_file():
     SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "skills_registry.py"
 sys.path.insert(0, str(SCRIPT.parent))
 from skills_registry import archive_owned_sources  # noqa: E402
+from skills_registry_inventory import _local_skill_files  # noqa: E402
 
 
 class RegistryTests(unittest.TestCase):
@@ -94,6 +96,14 @@ class RegistryTests(unittest.TestCase):
         self.run_command("reconcile", "--no-plugins")
         result = self.run_command("reconcile", "--no-plugins", "--if-stale-days", "7")
         self.assertIn("SKIP", result.stdout)
+
+    def test_partial_rg_results_survive_unrelated_scan_error(self) -> None:
+        expected = self.projects / "client" / ".agents" / "skills" / "beta" / "SKILL.md"
+        with patch("skills_registry_inventory.shutil.which", return_value="rg"), patch(
+            "skills_registry_inventory.subprocess.run",
+            return_value=subprocess.CompletedProcess(["rg"], 2, stdout=str(expected) + "\n", stderr="other directory denied"),
+        ):
+            self.assertEqual(_local_skill_files(self.projects), [expected])
 
     def test_owned_source_archive_contains_tracked_scripts_and_blocks_secrets(self) -> None:
         repo = self.utilities / "dev-assistant"
