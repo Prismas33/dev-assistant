@@ -16,7 +16,7 @@ if not SCRIPT.is_file():
     SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "skills_registry.py"
 sys.path.insert(0, str(SCRIPT.parent))
 from skills_registry import archive_owned_sources  # noqa: E402
-from skills_registry_inventory import _local_skill_files  # noqa: E402
+from skills_registry_inventory import _local_skill_files, discover_skills, sha256_folder  # noqa: E402
 
 
 class RegistryTests(unittest.TestCase):
@@ -96,6 +96,25 @@ class RegistryTests(unittest.TestCase):
         self.run_command("reconcile", "--no-plugins")
         result = self.run_command("reconcile", "--no-plugins", "--if-stale-days", "7")
         self.assertIn("SKIP", result.stdout)
+
+    def test_external_revision_requires_matching_package_hash(self) -> None:
+        package = self.codex / "skills" / "alpha"
+        reviewed = sha256_folder(package)
+        metadata = {"skills": {"alpha": {
+            "source": "example/skills", "source_url": "https://github.com/example/skills",
+            "skill_path": "skills/alpha/SKILL.md", "commit": "a" * 40,
+            "folder_sha256": reviewed, "installed_at": "2026-10-18T00:00:00Z",
+        }}}
+        entries, warnings = discover_skills(self.codex, self.agents, self.utilities, [self.projects], metadata)
+        alpha = next(item for item in entries if item["name"] == "alpha")
+        self.assertEqual(alpha["commit"], "a" * 40)
+        self.assertEqual(alpha["skill_url"], "https://github.com/example/skills/blob/" + "a" * 40 + "/skills/alpha/SKILL.md")
+        self.assertFalse(warnings)
+        (package / "SKILL.md").write_text((package / "SKILL.md").read_text(encoding="utf-8") + "changed\n", encoding="utf-8")
+        entries, warnings = discover_skills(self.codex, self.agents, self.utilities, [self.projects], metadata)
+        alpha = next(item for item in entries if item["name"] == "alpha")
+        self.assertEqual(alpha["commit"], "não fixado")
+        self.assertTrue(any("alpha" in warning for warning in warnings))
 
     def test_partial_rg_results_survive_unrelated_scan_error(self) -> None:
         expected = self.projects / "client" / ".agents" / "skills" / "beta" / "SKILL.md"

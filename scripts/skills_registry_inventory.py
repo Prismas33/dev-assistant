@@ -133,23 +133,32 @@ def discover_skills(codex_home: Path, agents_home: Path, utilities: Path, projec
         name = data["name"] or path.parent.name
         lock = _skill_lock(path, agents_home)
         policy = metadata.get("skills", {}).get(name, {})
-        source = lock.get("source", "")
-        source_url = lock.get("sourceUrl", "")
+        source = lock.get("source", "") or policy.get("source", "")
+        source_url = lock.get("sourceUrl", "") or policy.get("source_url", "")
         commit = ""
+        folder_hash = sha256_folder(path.parent)
         own_repo = utilities / name
         if own_repo.is_dir() and (own_repo / ".git").exists():
             source_commit = git_value(own_repo, "rev-parse", "HEAD")
             source_url = git_value(own_repo, "remote", "get-url", "origin") or source_url
             source = source or (source_url.removeprefix("https://github.com/").removesuffix(".git"))
-            if source_commit and sha256_folder(own_repo) == sha256_folder(path.parent):
+            if source_commit and sha256_folder(own_repo) == folder_hash:
                 commit = source_commit
             else:
                 warnings.append(f"Fonte e instalação de {name} diferem; commit instalado não confirmado")
+        reviewed_commit = policy.get("commit", "")
+        reviewed_hash = policy.get("folder_sha256", "")
+        if reviewed_commit and reviewed_hash:
+            if reviewed_hash == folder_hash:
+                commit = reviewed_commit
+            else:
+                commit = ""
+                warnings.append(f"Pacote de {name} diverge da revisão auditada; commit instalado não confirmado")
         if not source and scope == "system":
             source = "Codex runtime"
         if source and not source_url and "/" in source and not source.startswith("Codex"):
             source_url = f"https://github.com/{source}"
-        skill_path = lock.get("skillPath", "SKILL.md")
+        skill_path = lock.get("skillPath", "") or policy.get("skill_path", "SKILL.md")
         direct_url = (
             f"{source_url.removesuffix('.git')}/blob/{commit or 'main'}/{skill_path}"
             if source_url.startswith("https://github.com/") else ""
@@ -163,12 +172,12 @@ def discover_skills(codex_home: Path, agents_home: Path, utilities: Path, projec
             "version": data["version"] or "não declarada",
             "license": data["license"] or policy.get("license", "não declarada"),
             "commit": commit or "não fixado",
-            "installed_at": lock.get("installedAt", "não verificada"),
+            "installed_at": lock.get("installedAt", "") or policy.get("installed_at", "não verificada"),
             "source": source or "não declarada",
             "source_url": source_url or "não declarado",
             "skill_url": direct_url or "não declarado",
             "sha256": sha256_file(path),
-            "folder_sha256": sha256_folder(path.parent),
+            "folder_sha256": folder_hash,
             "category": policy.get("category", "por classificar"),
             "technologies": policy.get("technologies", "por confirmar"),
             "projects": policy.get("projects", repo_name),

@@ -2,7 +2,7 @@
 name: dev-assistant
 description: Development workflow and skill coordinator for project discovery, safe setup, modular architecture, documentation, and proportional quality gates. Use when starting or resuming a software project, implementing or fixing code, reviewing a repository, or deciding which available specialist skills and validations apply. In discovery and bug diagnosis, investigate and propose before editing unless implementation is requested.
 metadata:
-  version: "1.2.0"
+  version: "1.2.1"
 ---
 
 # Dev Assistant

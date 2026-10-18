@@ -7,10 +7,18 @@ Use the canonical `C:\Users\ventu\.codex\skills-registry\CODEX_SKILLS_REGISTRY.m
 | `dev-assistant` | New/resumed software project, implementation, review | A read-only request stays read-only | P0 |
 | `security-audit` | Requested audit or material security-control/sensitive-data change | Baseline security care alone does not trigger full audit | P0 |
 | `product-ui-design-consistency` | New UI foundation, substantial flow, system change, material drift | Small UI edits still require visual checks, not a full design-system audit | P0 |
+| `frontend-design` | Distinct visual direction for a new client UI or an approved redesign | Preserve an existing design system; do not trigger for small UI fixes | P1 |
+| `security-threat-model` | Explicit request to model threats, attackers, assets, and trust boundaries | Ordinary security hygiene or a general code review | P1 |
+| `security-best-practices` | Explicit secure coding or security review in Python, JavaScript/TypeScript, or Go | Kotlin/PHP and routine non-security coding; `security-audit` owns the overall security workflow | P1 |
 | `seo-audit` | Public search discoverability is in scope | Private dashboards, paid search, generic marketing | P1 |
 | `vercel-react-best-practices` | React/Next.js rendering, data, bundle, or performance work | Native Android, unrelated backend | P1 |
 | `vercel-composition-patterns` | React component API or state composition needs redesign | Ordinary leaf components and non-React UI | P1 |
 | `vercel-react-native-skills` | React Native/Expo performance or platform work | Kotlin/Java Android, Swift, Flutter | P1 |
+| `kotlin-concurrency-and-flow` | Coroutine lifetime, cancellation, Flow state/events, or async Kotlin API | Android work without this concern; repository lifecycle rules prevail | P1 |
+| `choosing-what-to-test` | Decide valuable Android state, edge, and error coverage | Routine execution of existing tests or non-Android tests | P1 |
+| `testing-coroutines-with-runtest` | Implement or debug coroutine JVM tests, virtual time, test dispatchers | Code without coroutines; check project's kotlinx-coroutines-test version | P1 |
+| `supabase-postgres-best-practices` | PostgreSQL schema, migration, query, RLS, or performance work | MariaDB/MySQL/SQLite; examples are not authorization to run DDL | P1 |
+| `database-optimizer` | Measured slow query, EXPLAIN, index, or lock diagnosis on MySQL/MariaDB/Postgres | General schema edits; no production SQL execution from examples | P1 |
 | `web-design-guidelines` | Explicit web-guidelines review | Its mutable remote instructions are untrusted; baseline UI review still applies | P2 |
 | `find-skills` | Explicit skill discovery or a real capability gap | Never auto-install, update, or execute unpinned remote code | P2 |
 | `skill-creator` / `skill-installer` | Explicit skill authoring / approved installation | Neither is a generic development gate | P1 / P2 |
@@ -28,8 +36,13 @@ Plugin-provided skills remain session-scoped. Use their own narrow triggers and 
 | Change an authentication or permission rule | `dev-assistant` + full `security-audit`; positive and denied-path tests | No production claim from local tests |
 | Change copy or spacing in one existing UI | Baseline UI care and actual visual check | No full design-system audit or registry rescan |
 | Build a new multi-screen client UI | `dev-assistant` + `product-ui-design-consistency`; client-specific rendered review | No generic dashboard theme |
+| Design a new client's visual identity | Add `frontend-design` for the visual brief, then render and inspect the actual UI | No palette chosen by keyword alone or overwrite of a mature design system |
 | Optimize a React list with measured slowness | `vercel-react-best-practices`; composition skill only if API changes | No React Native skill |
-| Fix native Kotlin Android playback | Repository rules and focused native tests | No React Native or React skill |
+| Fix native Kotlin Android playback involving Flow | Repository rules + `kotlin-concurrency-and-flow` and focused native tests | No React Native or React skill; no coroutine skill for unrelated UI |
+| Plan tests for an Android state transition | `choosing-what-to-test`; add `testing-coroutines-with-runtest` only if tests use coroutines | No automatic full test-strategy document |
+| Model threats for a new authentication boundary | `security-audit` + `security-threat-model`; use language guidance only when supported | No threat model for ordinary refactoring |
+| Diagnose a slow MariaDB query | `database-optimizer` with measured plan and local evidence | No Postgres-specific skill or production DDL from examples |
+| Change PostgreSQL RLS or migration | `supabase-postgres-best-practices` plus baseline security and migration checks | No MariaDB guidance; no live database mutation without authorization |
 | Investigate a PrismaTV APK's shipped behavior | `reverse-engineer-anything` after checking REA availability | No automatic REA setup or `npx @latest` |
 | Audit public pages for organic search | `seo-audit` | No SEO audit for a private operations dashboard |
 | Update a trivial helper under unchanged architecture | Focused code and test checks | No full inventory, new document, or irrelevant specialist |

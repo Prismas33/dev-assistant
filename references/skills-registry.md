@@ -13,7 +13,7 @@ The canonical file on this Windows installation is `C:\Users\ventu\.codex\skills
 
 The registry records skill files found under the global `.codex/skills` and `.agents/skills` roots, including `.system`, plus repository `.agents/skills` under configured project roots. It separately records installed plugins from `codex plugin list --json`; plugin caches and the current session's exposed skills are different states. Unknown new skills remain `por auditar`. Review their source revision, license, scripts, dependencies, credential access, destructive operations, and compatibility before adding them to the routing shortlist.
 
-The `skills-metadata.json` alongside the catalog holds curated category, trigger, exclusions, dependencies, and audit state. Keep facts there; do not edit the generated inventory table directly. If the Markdown and manifest differ, reconciliation stops rather than overwriting an unexplained edit.
+The `skills-metadata.json` alongside the catalog holds curated category, trigger, exclusions, dependencies, and audit state. For an externally installed skill, also record its repository, exact `SKILL.md` path, audited commit, and SHA-256 of the complete installed package. The reconciler reports that commit only while the package hash matches; otherwise it warns and leaves the installed revision unconfirmed. Keep facts there; do not edit the generated inventory table directly. If the Markdown and manifest differ, reconciliation stops rather than overwriting an unexplained edit.
 
 ## Installation and recovery boundary
 
