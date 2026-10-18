@@ -8,7 +8,9 @@ Codex skill for repository discovery, project continuity, safe documentation set
 - Separates discovery/diagnosis from authorized implementation.
 - Creates the full documentation manifest without overwriting existing files.
 - Enforces thin entrypoints and one module per independent responsibility, without arbitrary line limits.
-- Routes security-sensitive changes through the `security-audit` skill.
+- Selects available specialist skills by verified stack, project phase, risk, and task; reassesses only after material changes.
+- Applies baseline security, UI/UX, testing, and documentation standards while reserving full specialist workflows for their actual triggers.
+- Routes material security changes through the `security-audit` skill.
 - Validates documentation completeness with a bundled script.
 
 ## Installation

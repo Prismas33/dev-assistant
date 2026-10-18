@@ -23,6 +23,14 @@ Apply only gates relevant to the requested work. Never claim evidence from a che
 - [ ] Existing behavior outside scope is preserved.
 - [ ] Focused lint/typecheck/tests/build completed as applicable.
 
+## Interface change
+
+- [ ] Client identity, existing tokens/components, and real user task checked.
+- [ ] Relevant normal, loading, empty, error, and long-content states considered.
+- [ ] Changed interface rendered and inspected at applicable viewports and interaction states when technically possible; gaps reported explicitly.
+- [ ] Keyboard, focus, semantics, contrast, and touch behavior checked as applicable.
+- [ ] `product-ui-design-consistency` loaded when the change establishes or substantially changes the visual system or flow.
+
 ## Bug diagnosis and fix
 
 - [ ] Original behavior reproduced or evidenced.
@@ -34,7 +42,8 @@ Apply only gates relevant to the requested work. Never claim evidence from a che
 
 ## Security-sensitive change
 
-- [ ] `security-audit` skill loaded.
+- [ ] Affected trust boundary and impact classified.
+- [ ] Full `security-audit` skill loaded when the task changes a security control or requests an audit.
 - [ ] Cross-layer contract mapped.
 - [ ] Authorization and negative cases tested.
 - [ ] Secrets and sensitive data absent from URL, storage, bundle, console, and logs.

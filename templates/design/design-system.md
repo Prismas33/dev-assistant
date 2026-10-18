@@ -1,5 +1,7 @@
 # Design System
 
+> Os valores de cor, tipografia e CSS abaixo ilustram a estrutura do documento; não constituem uma identidade visual aprovada. Para cada cliente, confirmar marca, público, dispositivos, conteúdo e design system existente antes de adotar ou substituir estes exemplos.
+
 > Sistema de design do projeto.
 
 ---

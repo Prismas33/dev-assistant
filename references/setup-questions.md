@@ -20,7 +20,10 @@ Ask only when the answer affects immediate work:
 - authentication and authorization;
 - hosting/environments;
 - external integrations;
-- test and deployment expectations.
+- test and deployment expectations;
+- user interfaces and the client's visual identity or existing design system;
+- data sensitivity, roles, and other material risks;
+- current development phase and immediate objectives.
 
 Do not default silently to Next.js, Node.js, PostgreSQL, Supabase, Firebase, a payment provider, or a hosting provider. Use `TBD` until the user or an accepted project decision chooses them.
 

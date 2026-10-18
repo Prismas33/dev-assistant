@@ -1,6 +1,8 @@
 ---
 name: dev-assistant
-description: Development workflow with project discovery, source-of-truth loading, safe setup, modular architecture, auto-documentation, and proportional quality gates. Use when starting or resuming a software project, inspecting an unfamiliar repository, implementing or fixing code, preparing project documentation, enforcing maintainable feature structure, reviewing project state, or deciding what validation and documentation a change requires. In discovery and bug-diagnosis requests, investigate and propose before editing unless the user explicitly asks for implementation.
+description: Development workflow and skill coordinator for project discovery, safe setup, modular architecture, documentation, and proportional quality gates. Use when starting or resuming a software project, implementing or fixing code, reviewing a repository, or deciding which available specialist skills and validations apply. In discovery and bug diagnosis, investigate and propose before editing unless implementation is requested.
+metadata:
+  version: "1.1.0"
 ---
 
 # Dev Assistant
@@ -14,6 +16,23 @@ description: Development workflow with project discovery, source-of-truth loadin
 5. Briefly state the structure and responsibility split to use before implementation.
 
 If sources conflict, identify the conflict. Prefer accepted decisions and current code/runtime evidence over old summaries. Never silently invent missing product, security, legal, pricing, provider, or hosting decisions; record them as `TBD` or request direction when they materially change the result.
+
+## Coordinate available skills
+
+At the start of a new project, or when resuming one without a reliable selection, confirm the actual stack from manifests and code, then identify the product goals, users and interfaces, data boundaries, risk, and development phase. Inspect the skills actually exposed in the session and the repository; read [references/skill-catalog.md](references/skill-catalog.md) for the relevant candidates. Do not infer a stack from a project name or install or update skills as part of selection.
+
+Select only skills whose trigger and dependencies match the task. Prefer a repository-specific instruction or accepted design decision over generic skill advice, subject to higher-priority safety and user instructions. A specialist skill adds a workflow for its own domain; it does not grant permission for deployments, remote installs, credentials, or destructive actions. If two skills overlap, use the narrower one for the concrete concern and combine them only when both add distinct checks.
+
+For a new project, record a short selection and reason in its existing canonical memory, architecture, or setup document. Include material exclusions or missing dependencies. Do not create a separate skills document just for this. Reassess when the phase, stack, architecture, security boundary, interface, or requirements change materially. For a small task under unchanged conditions, reuse the current selection and inspect only directly relevant skills; do not rescan the whole library or rewrite project documentation.
+
+Apply these baseline standards on every relevant change, even when no specialist skill is loaded:
+
+- **Security:** assess the affected trust boundary, permissions, secrets, sensitive data, and deployment impact in proportion to risk. Load the full `security-audit` workflow for a security request or a material change to a security control or sensitive data path.
+- **UI/UX:** when an interface changes, use the client's identity and existing design system, interaction patterns, accessibility, and real content. Avoid generic AI styling. Render and inspect the changed interface in applicable states and viewports when technically possible; report what could not be viewed. Load `product-ui-design-consistency` for a new interface foundation, substantial flow, design-system change, or material visual drift.
+- **Tests:** choose focused tests and runtime checks that cover the behavior and meaningful failure cases. State which gates ran and which did not.
+- **Documentation:** update the canonical project documentation when decisions, contracts, architecture, operational behavior, or scope materially change; avoid new documents and diary entries for trivial edits.
+
+Following a baseline rule is not the same as running a complete specialist skill. Read only the skill and references needed for the current work.
 
 ## Classify the request
 
@@ -71,13 +90,15 @@ Reject an implementation as incomplete when an entrypoint accumulates multiple i
 
 ## Apply security gates
 
-For authentication, passwords, sessions, JWT, browser storage, cookies, CORS, CSP, CSRF, credentials, secrets, authorization, PII, uploads, payments, webhooks, logging, or production security deployment:
+Use the security baseline above for all changes. For a security audit, incident, or a material change to authentication, sessions, authorization, credentials, secrets, sensitive-data handling, uploads, payments, webhooks, or security deployment:
 
-1. Load and follow the `security-audit` skill before editing.
-2. Map browser/frontend, API/BFF, database, proxy/CDN, native or legacy clients, and deployment/rollback contracts as applicable.
-3. Define the smallest negative and positive tests that prove the change without breaking compatible clients.
-4. Deploy backend compatibility before a dependent frontend.
-5. Do not call the work complete based only on static analysis or a local build.
+1. Load and follow the full `security-audit` skill before editing.
+2. Map affected browser/frontend, API/BFF, database, proxy/CDN, native or legacy clients, and deployment/rollback contracts as applicable.
+3. Define focused positive and negative tests for the changed control and compatible clients.
+4. Sequence backend compatibility before dependent frontend behavior when needed.
+5. Distinguish local checks from device, staging, and production proof; do not claim deployment validation from a static check or local build.
+
+Ordinary changes that merely mention a cookie, log line, or API do not automatically require a full audit. Escalate when the trust boundary or security behavior actually changes, or when the user asks for the audit.
 
 ## Validate proportionally
 
@@ -112,6 +133,7 @@ Read [references/checklists.md](references/checklists.md) for the applicable gat
 - [references/modular-architecture.md](references/modular-architecture.md): responsibility boundaries and review gate.
 - [references/setup-questions.md](references/setup-questions.md): questions for genuinely missing context.
 - [references/checklists.md](references/checklists.md): proportional quality gates.
+- [references/skill-catalog.md](references/skill-catalog.md): scoped skill catalog, exclusions, and activation checks; read at onboarding or material re-selection.
 - `templates/`: merge-safe project documentation templates.
 - `scripts/init-project.ps1`: create missing template files without overwriting project files.
 - `scripts/validate-project-docs.ps1`: verify documentation completeness and placeholders.
